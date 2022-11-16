@@ -236,7 +236,7 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
     }
 
     public void deleteMax()  {
-        if(isEmpty()) {
+        if(root == null) {
             throw new NoSuchElementException();
         }
         root = deleteMax(root);
@@ -244,10 +244,11 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
 
     private Node<Key, Value> deleteMax(Node x) {
         if (x.right == null) return x.left;
-        x.right = deleteMin(x.right);
+        x.right = deleteMax(x.right);
         x.N = size(x.left) + size(x.right) + 1;
         return x;
     }
+    
 
     public int size(Key lo, Key hi) {
         Queue<Key> queue = (Queue<Key>) keys(lo, hi);
@@ -259,6 +260,10 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
         Node<Key, Value> iter = root;
         Node<Key, Value> iterStalker = null;
         Node<Key, Value> euNode = new Node(key, val, 1);
+        if(root == null) {
+            root = euNode;
+            return;
+        }
 
         // Iterates through tree to proper spot. Stalker follows on node behind.
         while(iter != null) {
@@ -269,10 +274,7 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
         }
 
         // Places new node
-        if(iterStalker == null) {
-            iterStalker = euNode;
-        }
-        else if(key.compareTo(iterStalker.key) < 0) {
+        if(key.compareTo(iterStalker.key) < 0) {
             iterStalker.left = euNode;
         }
         else {
@@ -332,7 +334,7 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
         StringBuilder sb = new StringBuilder();
         Queue<Node> queue = new LinkedList<>();
         Node<Key, Value> start = floor(root, key);
-        if(start == null) throw new NoSuchElementException();
+        if(start == null) return "Empty Tree";
 
         // Enqueue the start node, aka first level
         queue.add(start);
