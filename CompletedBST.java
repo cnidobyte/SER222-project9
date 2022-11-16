@@ -9,8 +9,8 @@ import java.util.Queue;
  * 
  * Completion time: (your completion time)
  *
- * @author (your name), Sedgewick, Acuna
- * @version (version)
+ * @author Shota Bennett, Sedgewick, Acuna
+ * @version 1.03
  */
 import java.util.Collections;
 import java.util.LinkedList;
@@ -248,7 +248,7 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
         x.N = size(x.left) + size(x.right) + 1;
         return x;
     }
-    
+
 
     public int size(Key lo, Key hi) {
         Queue<Key> queue = (Queue<Key>) keys(lo, hi);
@@ -334,7 +334,7 @@ public class CompletedBST<Key extends Comparable<Key>, Value> implements BST<Key
         StringBuilder sb = new StringBuilder();
         Queue<Node> queue = new LinkedList<>();
         Node<Key, Value> start = floor(root, key);
-        if(start == null) return "Empty Tree";
+        if(start == null) return "empty";
 
         // Enqueue the start node, aka first level
         queue.add(start);
